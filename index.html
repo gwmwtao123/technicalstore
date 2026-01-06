@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BEKAR Tee – Wear Your Mood</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#fff;color:#000}
+
+/* HEADER */
+header{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:14px 16px;
+ border-bottom:1px solid #eee;
+ position:sticky;
+ top:0;
+ background:#fff;
+ z-index:100;
+}
+.logo{font-size:22px;font-weight:900}
+.icons span{margin-left:14px;font-size:20px;cursor:pointer}
+
+/* BANNER */
+.banner{
+ position:relative;
+ margin:16px;
+ border-radius:16px;
+ overflow:hidden;
+}
+.banner img{
+ width:100%;
+ height:260px;
+ object-fit:cover;
+}
+.banner button{
+ position:absolute;
+ top:50%;
+ left:50%;
+ transform:translate(-50%,-50%);
+ padding:14px 32px;
+ border:none;
+ border-radius:30px;
+ background:#fff;
+ font-size:16px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+/* TITLE */
+.section-title{
+ padding:16px;
+ font-size:22px;
+ font-weight:bold;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+.section-title span{
+ font-size:14px;
+ color:#555;
+}
+
+/* PRODUCTS GRID */
+.products{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:16px;
+ padding:0 16px 120px;
+}
+.product{
+ border:1px solid #eee;
+ border-radius:14px;
+ overflow:hidden;
+}
+.product img{
+ width:100%;
+ height:220px;
+ object-fit:cover;
+}
+.product-info{
+ padding:10px;
+}
+.product h4{
+ font-size:14px;
+ margin-bottom:6px;
+}
+.product p{
+ font-weight:bold;
+ margin-bottom:8px;
+}
+.product button{
+ width:100%;
+ padding:10px;
+ border:none;
+ background:#000;
+ color:#fff;
+ border-radius:8px;
+ cursor:pointer;
+}
+
+/* CART */
+.cart{
+ position:fixed;
+ top:0;right:-100%;
+ width:80%;
+ height:100%;
+ background:#fff;
+ box-shadow:-4px 0 10px rgba(0,0,0,.2);
+ padding:16px;
+ transition:.3s;
+ z-index:1000;
+ overflow:auto;
+}
+.cart.active{right:0}
+.cart h2{text-align:center;margin-bottom:10px}
+.cart-item{border-bottom:1px solid #eee;padding:8px 0}
+.cart button{
+ width:100%;
+ padding:12px;
+ margin-top:10px;
+ background:#000;
+ color:#fff;
+ border:none;
+ border-radius:10px;
+}
+
+/* CHAT */
+.chat{
+ position:fixed;
+ bottom:20px;
+ right:20px;
+ width:55px;height:55px;
+ background:#000;color:#fff;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:24px;
+ cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <span>☰</span>
+ <div class="logo">BEKAR TEE</div>
+ <div class="icons">
+  <span onclick="toggleCart()">🛒</span>
+ </div>
+</header>
+
+<!-- BANNERS -->
+<div class="banner">
+ <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=900&q=80" alt="Shop Now Banner">
+ <button>Shop Now</button>
+</div>
+
+<div class="banner">
+ <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80" alt="Shop Collection Banner">
+ <button>Shop Collection</button>
+</div>
+
+<!-- PRODUCTS -->
+<div class="section-title">
+ Products <span>View all</span>
+</div>
+
+<div class="products">
+
+<!-- We'll generate 30 products here -->
+<script>
+const products = [
+  {name:"AGAN Oversized Tee", price:799, img:"https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=600&q=80"},
+  {name:"BIBAR Hibiscus Hoodie", price:1299, img:"https://images.unsplash.com/photos/nZIvH_8FdFM?auto=format&fit=crop&w=600&q=80"},
+  {name:"BODO Vertical Hoodie", price:1299, img:"https://images.unsplash.com/photos/jAVhiOQz47I?auto=format&fit=crop&w=600&q=80"},
+  {name:"BODO Gold Tee", price:849, img:"https://images.unsplash.com/photos/zc-Qw69dbjw?auto=format&fit=crop&w=600&q=80"},
+  {name:"BODOFA Heritage Hoodie", price:1449, img:"https://pixabay.com/get/g2b2182849f0cbaa4b1a0cd0d5f85f3b8c2c1a6f01_640.jpg"},
+  {name:"SERJA Musical Hoodie", price:1449, img:"https://pixabay.com/get/g2b2182849f0cbaa4b1a0cd0d5f85f3b8c2c1a6f01_640.jpg"},
+  {name:"VINTA Knit Sweater", price:999, img:"https://images.unsplash.com/photo-1602810316498-ab67cf68c8e1?auto=format&fit=crop&w=600&q=80"},
+  {name:"LEVO Pullover Hoodie", price:1199, img:"https://images.unsplash.com/photos/1600180758890-6b94519a8ba6?auto=format&fit=crop&w=600&q=80"},
+  {name:"MANTO Wool Jumper", price:1349, img:"https://images.unsplash.com/photos/1618354691229-2a6b85d34e1d?auto=format&fit=crop&w=600&q=80"},
+  {name:"ZENTO Street Hoodie", price:1299, img:"https://images.unsplash.com/photos/1620799139507-2a76f79a2f4d?auto=format&fit=crop&w=600&q=80"},
+  {name:"ORION Knit Pullover", price:899, img:"https://images.unsplash.com/photos/1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80"},
+  {name:"SAVER Oversized Hoodie", price:1399, img:"https://images.unsplash.com/photos/1591441041045-14e109e07f23?auto=format&fit=crop&w=600&q=80"},
+  {name:"TARON Pullover Sweater", price:799, img:"https://images.unsplash.com/photos/1602141563300-b62b93f2b4a6?auto=format&fit=crop&w=600&q=80"},
+  {name:"LEONA Gold Hoodie", price:1449, img:"https://images.unsplash.com/photos/1603451214563-9b14c2b7f9e8?auto=format&fit=crop&w=600&q=80"},
+  {name:"MIRAI Knit Sweater", price:1099, img:"https://images.unsplash.com/photos/1605674567891-2a67c2b2e9f1?auto=format&fit=crop&w=600&q=80"},
+  {name:"BENTO Oversized Pullover", price:1299, img:"https://images.unsplash.com/photos/1606789456784-1f6c2b2d3b4c?auto=format&fit=crop&w=600&q=80"},
+  {name:"NOVO Vertical Hoodie", price:1249, img:"https://images.unsplash.com/photos/1607894567895-2a8c3d3f2d1a?auto=format&fit=crop&w=600&q=80"},
+  {name:"REVO Wool Jumper", price:1349, img:"https://images.unsplash.com/photos/1608901234567-3b9d4f2a3c4b?auto=format&fit=crop&w=600&q=80"},
+  {name:"KENTO Street Hoodie", price:1199, img:"https://images.unsplash.com/photos/1609012345678-1f2d3a4c5b6d?auto=format&fit=crop&w=600&q=80"},
+  {name:"HERO Knit Pullover", price:999, img:"https://images.unsplash.com/photos/1609123456789-3b2d1a4c5e7f?auto=format&fit=crop&w=600&q=80"},
+  {name:"LEVO Oversized Hoodie", price:1399, img:"https://images.unsplash.com/photos/1609234567890-4b3c2d1e5f6a?auto=format&fit=crop&w=600&q=80"},
+  {name:"SAVO Pullover Sweater", price:849, img:"https://images.unsplash.com/photos/1609345678901-5b4c3d2e6f7b?auto=format&fit=crop&w=600&q=80"},
+  {name:"MIRA Street Hoodie", price:1299, img:"https://images.unsplash.com/photos/1609456789012-6b5d4e3f7g8h?auto=format&fit=crop&w=600&q=80"},
+  {name:"TARO Wool Jumper", price:1099, img:"https://images.unsplash.com/photos/1609567890123-7c6e5f4g8h9i?auto=format&fit=crop&w=600&q=80"},
+  {name:"NOVA Vertical Hoodie", price:1349, img:"https://images.unsplash.com/photos/1609678901234-8d7f6g5h9i0j?auto=format&fit=crop&w=600&q=80"},
+  {name:"RENO Knit Sweater", price:1249, img:"https://images.unsplash.com/photos/1609789012345-9e8g7h6i0j1k?auto=format&fit=crop&w=600&q=80"},
+  {name:"BENTO Oversized Pullover", price:1299, img:"https://images.unsplash.com/photos/1609890123456-0f9h8i7j1k2l?auto=format&fit=crop&w=600&q=80"},
+  {name:"KENTO Street Hoodie", price:1199, img:"https://images.unsplash.com/photos/1609901234567-1g0i9j8k2l3m?auto=format&fit=crop&w=600&q=80"},
+  {name:"LEONA Gold Hoodie", price:1449, img:"https://images.unsplash.com/photos/1609912345678-2h1j0k9l3m4n?auto=format&fit=crop&w=600&q=80"},
+  {name:"MIRAI Knit Sweater", price:1099, img:"https://images.unsplash.com/photos/1609923456789-3i2k1l0m4n5o?auto=format&fit=crop&w=600&q=80"},
+  {name:"REVO Wool Jumper", price:1349, img:"https://images.unsplash.com/photos/1609934567890-4j3l2m1n5o6p?auto=format&fit=crop&w=600&q=80"}
+];
+
+products.forEach((p, index)=>{
+  document.write(`
+  <div class="product">
+    <img src="${p.img}" alt="${p.name}">
+    <div class="product-info">
+      <h4>${p.name}</h4>
+      <p>Rs. ${p.price}</p>
+      <button onclick="addCart('${p.name}',${p.price})">Add to Cart</button>
+    </div>
+  </div>
+  `);
+});
+</script>
+
+</div>
+
+<!-- CART -->
+<div class="cart" id="cart">
+ <h2>Your Cart</h2>
+ <div id="cartItems"></div>
+ <button onclick="checkout()">Checkout</button>
+</div>
+
+<div class="chat">💬</div>
+
+<script>
+let cart=[]
+function addCart(name,price){
+ cart.push({name,price})
+ renderCart()
+ alert("Added to cart")
+}
+function toggleCart(){
+ document.getElementById("cart").classList.toggle("active")
+}
+function renderCart(){
+ let html=""
+ let total=0
+ cart.forEach(i=>{
+  html+=`<div class="cart-item">${i.name} - Rs.${i.price}</div>`
+  total+=i.price
+ })
+ html+=`<p><b>Total: Rs.${total}</b></p>`
+ document.getElementById("cartItems").innerHTML=html
+}
+function checkout(){
+ alert("Checkout Coming Soon")
+}
+</script>
+
+</body>
+</html>
